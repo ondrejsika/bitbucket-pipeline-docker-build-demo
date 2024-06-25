@@ -1,0 +1,14 @@
+image: sikalabs/ci
+
+pipelines:
+  default:
+    - step:
+        services:
+          - docker
+        caches:
+          - docker
+        script:
+          - docker build -t $DOCKER_REGISTRY/ondrejsika/bitbucket-pipeline-docker-build-demo:build-$BITBUCKET_BUILD_NUMBER .
+          - docker login -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD $DOCKER_REGISTRY
+          - docker push $DOCKER_REGISTRY/ondrejsika/bitbucket-pipeline-docker-build-demo:build-$BITBUCKET_BUILD_NUMBER
+
